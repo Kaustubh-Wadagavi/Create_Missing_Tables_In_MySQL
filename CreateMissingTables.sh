@@ -1,7 +1,11 @@
 #! /bin/bash
 
-while read line
+IGNORED_TABLES_STRING="";
+
+while read PRESENT_TABLES
 do
-   echo "Record is : $line";
-   mysqldump -uos_tester -p -no-data --ignore-tables=os_mysql.$line --complete-insert os_mysql > os_extra_tables.sql
-done < os_tables.csv
+ IGNORED_TABLES_STRING+=" --ignore-table=os_mysql.${PRESENT_TABLES}"
+done<os_tables.csv
+
+mysqldump -uos_tester -psecrete --single-transaction --skip-lock-tables --no-data --routines --complete-insert ${IGNORED_TABLES_STRING} os_mysql > os_extra_tables.sql
+
