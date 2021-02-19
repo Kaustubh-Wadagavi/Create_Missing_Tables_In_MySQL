@@ -10,7 +10,7 @@ IGNORED_TABLES_STRING="";
 while read PRESENT_TABLES
 do
  IGNORED_TABLES_STRING+=" --ignore-table=os_mysql.${PRESENT_TABLES}"
-done < os_tables.csv
+done < <ENTER os_table.csv FILE PATH HERE>
 
 # Exports extra tables schema
 mysqldump -u$DB_USER -p$DB_PASS --no-data --complete-insert ${IGNORED_TABLES_STRING} $DB_NAME > $DB_EXTRA_TABLES_SCHEMA_FILE
